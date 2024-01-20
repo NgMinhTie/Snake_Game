@@ -10,13 +10,13 @@ struct Coordinate{
 class Snake{
     private:
         int length;
-        Coordinate *snakeCoor;
+        Coordinate *snakeCoor[50];
 
     public:
         void setLength();
         int getLength();
-        int getX();
-        int getY();
+        int getX(int i);
+        int getY(int i);
 };
 
 class Bounder{
@@ -26,9 +26,9 @@ class Bounder{
         Coordinate *boundLimit;
 
     public:
-        void setWidth();
+        void setWidth(int diff);
         int getWidth();
-        void setLength();
+        void setLength(int diff);
         int getLength();
         int getXLimit();
         int getYLimit();
@@ -43,7 +43,8 @@ class Implementation{
         int levelDiff;
 
     public:
-        void setScore();
+        Implementation();
+        void setScore(int i);
         int getScore();
         void askUserName();
         void setDifficulty();
