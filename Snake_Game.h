@@ -1,37 +1,39 @@
 #include <iostream>
 #include <string>
 #include <windows.h>
+#include <random>
 
 using namespace std;
 
 struct Coordinate{
     int x, y;
 };
+
 class Snake{
     private:
         int length;
-        Coordinate *snakeCoor[50];
+        Coordinate **snakeCoor;
 
     public:
         void setLength();
         int getLength();
-        int getX(int i);
-        int getY(int i);
+        void setX(int i);
+        void setY(int i);
+        void setUpCoor(int row, int column);
 };
 
 class Bounder{
     private:
         int width;
         int length;
-        Coordinate *boundLimit;
 
     public:
         void setWidth(int diff);
         int getWidth();
         void setLength(int diff);
         int getLength();
-        int getXLimit();
-        int getYLimit();
+        void setupBounder();
+        void printBounder();
 };
 
 class Implementation{
@@ -49,4 +51,8 @@ class Implementation{
         void askUserName();
         void setDifficulty();
         void run();
+        void printInfo();
+        void setFood();
+        Snake *getSnake();
+        Bounder *getBounder();
 };
