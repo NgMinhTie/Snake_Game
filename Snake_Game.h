@@ -2,6 +2,12 @@
 #include <string>
 #include <windows.h>
 #include <random>
+#include<ctime>
+#include<conio.h>
+#include<thread>
+#include<vector>
+#include<utility>
+#include<queue>
 
 using namespace std;
 
@@ -13,13 +19,17 @@ class Snake{
     private:
         int length;
         Coordinate **snakeCoor;
+        pair<int, int> *myCoor;
+        vector<pair<int, int>> myvector;
 
     public:
+        Snake();
         void setLength();
         int getLength();
-        void setX(int i);
-        void setY(int i);
+        //void setX(int i);
+        //void setY(int i);
         void setUpCoor(int row, int column);
+        void move();
 };
 
 class Bounder{
@@ -53,6 +63,7 @@ class Implementation{
         void run();
         void printInfo();
         void setFood();
+        void enterKey();
         Snake *getSnake();
         Bounder *getBounder();
 };
