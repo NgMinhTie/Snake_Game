@@ -4,9 +4,10 @@ static int score = 0;
 static char direction = '\0';
 static char **coor;
 static int setupSuccess = 0;
-static bool ate = false;
+static bool ate = true;
 static bool entered = false;
 const int MAXSIZE = 150;
+//static bool setUp_Coor = false;
 enum Direction
 {
     LEFT = 0,
@@ -29,15 +30,24 @@ void Snake::setUpCoor(int row, int column){
         temp.first = row;
         temp.second = column;
         myvector.push_back(temp);
-        //cout << temp.first << " " << temp.second << endl;
+        cout << temp.first << " " << temp.second << endl;
+        //cout << temp.first + 1 << " " << temp.second - 1<< endl;
     }
+    ////setUp_Coor = true;
     return;
 }
 void Snake::setLength(){
+    this->length += 1;
     return;
 }
 int Snake::getLength(){
     return this->length;
+}
+bool Snake::win(){
+    score = 10 * getLength();
+    if(score >= 150)
+        return true;
+    return false;
 }
 void Snake::move(){
     if(myvector.empty())
@@ -66,7 +76,7 @@ void Snake::move(){
     //**************************************************
     //*check the snake eat itselt or meet the wall or not
     //***************************************************
-    if ((coor[front.first][front.second] == '0' || coor[front.first][front.second] =='*')&&entered)
+    if ((coor[front.first][front.second] == '0' || coor[front.first][front.second] =='#')&&entered)
     {
         cout << "Game Over!";
         isLose = 1;
@@ -74,6 +84,7 @@ void Snake::move(){
     }
     if (coor[front.first][front.second]== '*'){
         ate = true;
+        this->setLength();
     }
 
     if(ate == true){
@@ -82,10 +93,14 @@ void Snake::move(){
     }
     else {
         myvector.insert(myvector.begin(), front);
+        //cout << "DEBUG" << front.first << " " << front.second << endl;
+
         coor[front.first][front.second] = '0';
         pair<int, int> last = myvector.back();
+        //cout << "DEBUG" << last.first << " " << last.second << endl;
+
         myvector.pop_back();
-        coor[last.first][last.second] = '\0';
+        coor[last.first][last.second] = ' ';
     }
 }
 
@@ -262,7 +277,9 @@ void Implementation::enterKey(){
             {
                 direct = RIGHT;
             }
+            entered = true;
         }
+    
 }
 void Implementation::run(){
     //this->bounder->printBounder();
@@ -273,6 +290,7 @@ void Implementation::run(){
     this->snake->move();
     this->bounder->printBounder();
     this->printInfo();
+    this->getSnake()->win();
 }
 Implementation::Implementation(){
     this->snake = new Snake;
@@ -286,14 +304,19 @@ int main(){
     implementation->getBounder()->setupBounder();
     implementation->setScore(0); //*FIRST SET SCORE = 0;
     direct = STAY;
-    while(!isLose){
+    while(!isLose&&!implementation->getSnake()->win()){
         implementation->run();
         Sleep(250);
         system("cls");
-        
-    }
-    system("cls");
-    if(isLose)
-        cout << "-------------YOU LOSE------------" << endl;
-    return 0;
+        ////implementation->run();
+        ////Sleep(250);
+
+        }
+        // system("cls");
+        if(implementation->getSnake()->win()){
+            cout << "-------------YOU WIN------------" << endl;
+        }
+        if (isLose)
+            cout << "-------------YOU LOSE------------" << endl;
+        return 0;
 }

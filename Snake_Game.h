@@ -19,7 +19,7 @@ class Snake{
     private:
         int length;
         Coordinate **snakeCoor;
-        pair<int, int> *myCoor;
+        ////pair<int, int> *myCoor;
         vector<pair<int, int>> myvector;
 
     public:
@@ -30,6 +30,7 @@ class Snake{
         //void setY(int i);
         void setUpCoor(int row, int column);
         void move();
+        bool win();
 };
 
 class Bounder{
